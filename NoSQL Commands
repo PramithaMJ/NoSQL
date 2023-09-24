@@ -1,0 +1,126 @@
+-----------Neo4J commands------------
+
+1.
+Create (x:Person{name:”Sunil”, Age:28})
+
+2.
+match (x:person) return x    
+    
+3.
+match (x:person{name:“Nalin"}),(y:person{name:"Kamal"}) merge(x)-[r:associates{nature:"Neutral"}]->(y)
+match (x:person{name:"Nalin"}),(y:person{name:"Sunil"}) merge(x)-[r:associates{nature:"Family"}]->(y)
+match (x:person{name:"Saman"}),(y:person{name:"Neetha"}) merge(x)-[r:associates{nature:"Friend"}]->(y)
+match (x:person{name:"Saman"}),(y:person{name:“Saman"}) merge(x)-[r:associates{nature:“Neutral"}]->(y)
+
+4.
+match (x:person) return x
+
+5.
+match(x:person{name:"Saman"}) set x.Age =20
+
+6.
+MATCH (x:person{name:"Nadeesha"})-[r:associates]->(y:person{name:"Kamal"})set r.nature="Enemy"
+
+7.
+match(x:person{name:"Nadeesha"})-[r:associates{nature:"Enemy"}]->(y:person) return x,y
+
+
+---------- Cassandra commands ----------
+1.
+cassandra;                                     
+Cqlsh
+create keyspace keysp1 with replication = {'class':'SimpleStrategy','replication_factor':5};
+Consistency;
+consistency two;
+Consistency;
+consistency QUORUM;
+Consistency;
+
+2.
+describe keyspaces;
+
+3.
+Use keysp1;                                    
+create columnfamily CI(key int PRIMARY KEY,value map<text,text>);
+
+4-8.
+insert into CI(key,value) values(1,{'name':'Nalin','age':'30’});
+insert into CI(key,value) values(2,{'Item':'Dhal','price':'100','quantity':'2’});
+insert into CI(key,value) values(3,{'Billing':'credit card’});
+
+9.
+select * from CI;
+
+10.
+select value from CI where key=2;
+
+11.
+update CI set value={'age':'29'} where key = 1;                              
+select * from CI;
+
+update CI set value={'Age':'29', 'name':'Nalini'} where key =1;
+select * from CI;
+
+12.
+delete from CI where key =3;
+select * from CI;
+
+13.
+drop keyspace keysp1;
+Exit
+
+describe keyspaces;
+
+
+-------------- MongoDB commands -----------------
+     
+cls 
+Show dbs 
+Use studentdata 
+db 
+Show dbs 
+
+1. 
+db.createCollection("Student")    
+Cls
+Show dbs   
+db.dropDatabase()   
+
+2. 
+db.student.insertOne({Name:"Sunil", Age:23, GPA:2.5})           
+db.student.find()                                                                              
+
+db.student.insertOne({Name:{FirstName:"Namal", LastName:"Perera"}, Age:24, Gender:"M", Modules:[{code:"EE4202", Grade:"A"},{Code:"E2301", Grade:"B"},{Code:"E3200", Grade:"C"}]})
+db.student.find()
+db.student.insertOne({Name:{Name:"Nalini", Age:30, Gender:"F", Modules:[{code:"EE4202", Grade:“A"},{Code:"E2301", Grade:"E"}]}})
+
+db.student.insertMany([{name:"Kamal", Age: 23, GPA: 3.0},{Name:"Nimal", Age:33, GPA: 2.3},{name:"Saman", Age: 30}])
+
+3.
+db.student.findOne()
+
+4.
+db.student.find({_id:ObjectId("650219c56b45bc160e910aa5")})
+
+5.
+db.student.find({Age:24})
+
+6.
+db.student.find({"Name.LastName":"Perera"})
+
+7.
+db.student.count({"Modules":{"code":"EE4202",Grade:"A"}})
+
+8.
+db.student.updateOne({Name:"Sunil"},{$set:{Age:35}})
+db.student.findOne()
+
+9.
+db.student.deleteMany({Age:23})
+
+10.
+db.student.deleteOne({Name:"Nimal"})
+
+
+
+
